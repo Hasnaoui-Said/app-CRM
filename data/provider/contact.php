@@ -69,6 +69,8 @@
     $contacts = $contact->getContactsById(14);
     echo 'list des contacts <br>';
     print_r($contacts);
-    echo  "fint"
+    echo  "<br>------------------------------";
+    echo  "<br>------------------------------";
+    echo  "<br>fin"
 
 ?>
