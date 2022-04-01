@@ -1,0 +1,31 @@
+CREATE TABLE user (
+    id INTEGER PRIMARY KEY,
+    username VARCHAR(20),
+    email VARCHAR(50),  
+    password VARCHAR(255)
+);
+INSERT INTO `user`(`username`, `email`, `password`) 
+VALUES ('said','said@gmail.com','0000');
+
+CREATE TABLE contact (
+    id int PRIMARY KEY,
+    name VARCHAR(20),
+    phone VARCHAR(20),
+    email VARCHAR(50),
+    message VARCHAR(255),
+    user_id int,
+    FOREIGN KEY(user_id) REFERENCES user(id)
+);
+ALTER TABLE contact
+ADD FOREIGN KEY (user_id) REFERENCES user(id); 
+
+INSERT INTO `contact`(`name`, `phone`, `email`, `message`, `user_id`) 
+VALUES ('hassan', '+212657787','hassan@gmail.com', 'friends', 4 );
+INSERT INTO `contact`(`name`, `phone`, `email`, `message`, `user_id`) 
+VALUES ('hamza', '+212657787','hamza@gmail.com', 'Father', 14 );
+INSERT INTO `contact`(`name`, `phone`, `email`, `message`, `user_id`) 
+VALUES ('hamza', '+212657787','hamza@gmail.com', 'Friends', 4 );
+INSERT INTO `contact`(`name`, `phone`, `email`, `message`, `user_id`) 
+VALUES ('hamza', '+212657787','hamza@gmail.com', 'Brother', 14 );
+
+ALTER TABLE `contact` CHANGE `user_id` `user_id` INT(11) NOT NULL; 
