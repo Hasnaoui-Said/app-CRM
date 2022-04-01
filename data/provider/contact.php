@@ -66,11 +66,9 @@
     }
     $contact = new Contact();
     // $contact->setContact('nasser', 'nasser@gmail.com', '+21287986545', 'my friends', 14);
-    $contacts = $contact->getContactsById(14);
+    // $contacts = $contact->getContactsById(14);
     echo 'list des contacts <br>';
-    print_r($contacts);
+    // print_r($contacts);
     echo  "<br>------------------------------";
     echo  "<br>------------------------------";
-    echo  "<br>fin"
-
 ?>
