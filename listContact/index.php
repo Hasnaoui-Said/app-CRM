@@ -28,6 +28,7 @@
             <h1 class="fw-normal">Contacts</h1>
             <div class="cintactList">
                 <div class="d-flex justify-content-between align-content-center">
+                    <strong>Pannel:</strong>
                     <strong><a href="./../data/provider/contact.php"> Contacts List:</a></strong>
                     <div class="">
                         <button onclick="addContact()" id="addContact" class="btn btn-primary">Add Contact</button>
