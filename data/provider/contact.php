@@ -1,86 +1,138 @@
 <?php
-    require_once(dirname(__FILE__) .'./db.php');
-    class Contact extends Db{
-        public function setContact($name, $email, $phone, $message, $user_id){
+require_once(dirname(__FILE__) . './db.php');
+class Contact extends Db
+{
+    public $id;
+    public $name;
+    public $email;
+    public $phone;
+    public $message;
+    public $userId;
+    public function addContact()
+    {
 
-            $db = $this->connect();
-            
-            if($db == null){
-                return;
-            }
+        $db = $this->connect();
 
-            $sql = "INSERT INTO contact (name, email, phone, message, user_id) VALUES (:name, :email, :phone, :message, :user_id)";
-            $smt = $db->prepare($sql);
-
-            $smt->execute(
-                [
-                    ":name"=> $name,
-                    ":email"=> $email,
-                    ":phone"=> $phone,
-                    ":message"=> $message,
-                    ":user_id"=> $user_id
-                ]
-            );
-
-            $smt = null;
-            $db = null;
+        if ($db == null) {
+            return;
         }
 
-        public function getContacts(){
+        $sql = "INSERT INTO contact (name, email, phone, message, user_id) VALUES (:name, :email, :phone, :message, :user_id)";
+        $smt = $db->prepare($sql);
 
-            $db = $this->connect();
+        echo '<br>-----_SESSION-------' . $_SESSION['auth']['id'] . '------f-----<br>';
+        echo '<br>-------name-----' . $this->name . '------f-----<br>';
+        echo '<br>-------email-----' . $this->email . '-----f------<br>';
+        echo '<br>--------phone----' . $this->phone . '-------f----<br>';
+        echo '<br>--------message----' . $this->message . '-----f------<br>';
+        $smt->execute(
+            [
+                ":name" => $this->name,
+                ":email" => $this->email,
+                ":phone" => $this->phone,
+                ":message" => $this->message,
+                ":user_id" => $_SESSION['auth']['id']
+            ]
+        );
 
-            if($db == null){
-                return;
-            }
-
-            $query = $db->query('SELECT * FROM contact');
-
-            $data = $query->fetchAll(PDO::FETCH_ASSOC);
-
-            $query = null;
-            $db = null;
-
-            return $data;
-        }
-        public function getContactsById($id){
-
-            $db = $this->connect();
-
-            if($db == null){
-                return;
-            }
-            $query = 'SELECT * FROM contact WHERE user_id = :id';
-
-            $smt = $db->prepare($query);
-            $smt->execute([
-                ":id"=> $id,
-            ]);
-
-            $data = $smt->fetchAll(PDO::FETCH_ASSOC);
-            $query = null;
-            $db = null;
-
-            return $data;
-        }
+        $smt = null;
+        $db = null;
     }
-    $contact = new Contact();
+
+    public function findAllContactsByIdUser()
+    {
+
+        $db = $this->connect();
+
+        if ($db == null) {
+            return;
+        }
+        $query = 'SELECT * FROM contact WHERE user_id = :id';
+
+        $smt = $db->prepare($query);
+        $smt->execute([
+            ":id" => $_SESSION['auth']['id'],
+        ]);
+
+        $data = $smt->fetchAll(PDO::FETCH_ASSOC);
+        $query = null;
+        $db = null;
+
+        return $data;
+    }
+    public function findContactById()
+    {
+
+        $db = $this->connect();
+
+        if ($db == null) {
+            return;
+        }
+        $query = 'SELECT * FROM contact WHERE id = :id';
+
+        $smt = $db->prepare($query);
+        $smt->execute([
+            ":id" => $this->id,
+        ]);
+
+        $data = $smt->fetchAll(PDO::FETCH_ASSOC);
+        $query = null;
+        $db = null;
+
+        return $data;
+    }
+    function updateContactById()
+    {
+        $db = $this->connect();
+        if ($db == null) return;
+        $query = 'UPDATE contact 
+                SET id = :id, name = :name, email = :email, phone = :phone, message = :message 
+                WHERE id = :id';
+        $smt = $db->prepare($query);
+        $smt->execute([
+            ":id" => $this->id,
+            ":name" => $this->name,
+            ":phone" => $this->phone,
+            ":email" => $this->email,
+            ":message" => $this->message
+        ]);
+        $db = null;
+        $smt = null;
+    }
+    function deleteContactById()
+    {
+
+        $db = $this->connect();
+        if ($db == null) return;
+        $query = 'DELETE FROM contact WHERE id = :id';
+        $smt = $db->prepare($query);
+        $smt->execute([
+            ":id" => $this->id
+        ]);
+        $query = null;
+        $db = null;
+    }
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+    public function setMessage($message)
+    {
+        $this->message = $message;
+    }
+    public function setEmail($email)
+    {
+        $this->email = $email;
+    }
+    public function setPhone($phone)
+    {
+        $this->phone = $phone;
+    }
+}
+    // $contact = new Contact();
     // $contact->setContact('nasser', 'nasser@gmail.com', '+21287986545', 'my friends', 14);
     // $contacts = $contact->getContactsById(14);
-    echo 'list des contacts <br>';
-    // print_r($contacts);
-    echo  "<br>------------------------------";
-    echo  "<br>------------------------------";
-?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h2>Hello world</h2>
-</body>
-</html>

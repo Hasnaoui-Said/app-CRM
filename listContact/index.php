@@ -11,7 +11,6 @@ require_once(dirname(__FILE__) . './../data/provider/process.php');
     <title>Relation client</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-
 </head>
 
 <body class="m-0 p-0 w-full ">
@@ -20,7 +19,7 @@ require_once(dirname(__FILE__) . './../data/provider/process.php');
             <div class="container-fluid">
                 <a class="navbar-brand">Mes Contacts</a>
                 <ul class="d-flex">
-                    <li class="nav-item"><a class="nav-link" href="#"><?= $_SESSION['auth']['username'] ?></a></li>
+                    <li class="nav-item"><a class="nav-link" href="./../profile/"><?= $_SESSION['auth']['username'] ?></a></li>
                     <li class="nav-item"><a class="nav-link" href="#listContact">Contacts</a></li>
                     <li class="nav-item"><a class="nav-link" href="logout.php">LogOut</a></li>
                 </ul>
@@ -55,13 +54,13 @@ require_once(dirname(__FILE__) . './../data/provider/process.php');
                 </div>
 
                 <form id="form" action="./../data/provider/process.php" method="post" class="py-4 px-5 rounded-3 border border-dark p-3 bg-light container m-5 w-75 m-auto">
+                    <div class="w-100 me-2 d-none">
+                        <label for="id" class="form-label">id</label>
+                        <input type="number" value="<?= $edit_id ?? '' ?>" name="id" class="form-control" id="id" placeholder="id">
+                    </div>
                     <div class="mb-3 d-flex justify-content-between align-content-center">
-                        <div class="w-100 me-2 d-none">
-                            <label for="id" class="form-label">id</label>
-                            <input type="number" value="<?= $edit_id ?? '' ?>" name="id" class="form-control" id="id" placeholder="id">
-                        </div>
                         <div class="w-100 me-2 d-flex align-item-center gap-3">
-                            <label for="name" class="form-label">Name:</label>
+                            <label for="name" class="form-label">Name: <small class="invalidUsername"></small></label>
                             <input type="text" value="<?= $edit_name ?? '' ?>" name="name" class="form-control" id="name" placeholder="name">
                         </div>
                         <div class="w-100 ms-2 d-flex align-item-center gap-3">
@@ -101,7 +100,6 @@ require_once(dirname(__FILE__) . './../data/provider/process.php');
                             </thead>
                             <tbody>
                                 <?php
-                                // print_r($myContacts);
                                 foreach ($myContacts as $contact) {
                                 ?>
                                     <tr>
@@ -119,42 +117,12 @@ require_once(dirname(__FILE__) . './../data/provider/process.php');
                         </table>
                     </div>
                 </div>
-                <!-- <div id="alertForm" class="d-none">
-                    <form id="form" action="./../data/provider/process.php?type=add" method="post" class="py-4 px-5 rounded-3 border border-dark p-3 bg-light container m-5 w-75 m-auto">
-                        <div class="mb-3 d-flex justify-content-between align-content-center">
-                        <div class="w-100 me-2 d-none">
-                                <label for="id" class="form-label">id</label>
-                                <input type="number" name="id" class="form-control" id="id" placeholder="id">
-                            </div>
-                            <div class="w-100 me-2">
-                                <label for="name" class="form-label">Name</label>
-                                <input type="text" name="name" class="form-control" id="name" placeholder="name">
-                            </div>
-                            <div class="w-100 ms-2">
-                                <label for="phone" class="form-label">Phone</label>
-                                <input type="text" name="phone" class="form-control" id="phone" placeholder="phone">
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <label for="mail" class="form-label">Email</label>
-                            <input type="text" name="email" class="form-control" id="email" placeholder="e-mail">
-                        </div>
-                        <div class="mb-3">
-                            <label for="password" class="form-label">Password</label>
-                            <textarea name="message" cols="" rows="3" class="form-control" id="message"
-                                placeholder="message"></textarea>
-                        </div>
-                        <div class="mb-3 text-end">
-                            <button type="submit" class="btn btn-primary w-25">Save</button>
-                            <button onclick="addContact()" type="button" class="btn btn-primary w-25">Close</button>
-                        </div>
-                    </form>
-                </div> -->
             </div>
         </div>
     </main>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <script src="script.js"></script>
+    <!-- <script src="vali.js"></script> -->
 </body>
 
 </html>

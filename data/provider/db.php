@@ -18,13 +18,12 @@ class Db{
             if(time() - $_SESSION['auth']['session_gc_lifetime'] > 3600 * 24){
                 session_unset();
                 session_destroy();
-                return false;
             }
         }
         return (
             isset($_SESSION['auth']) &&
-            isset($_SESSION['auth']['email']) &&
-            isset($_SESSION['auth']['pass']) &&
+            isset($_SESSION['auth']['password']) &&
+            isset($_SESSION['auth']['username']) &&
             (time() - $_SESSION['auth']['session_gc_lifetime'] < 3600 * 24)
         );
     }
